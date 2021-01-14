@@ -1,6 +1,7 @@
 import { Schema, model, Model, Document } from "mongoose";
-import * as bcrypt from "bcrypt";
 import { NextFunction } from "express";
+import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
 
 export interface IUser {
   email: string;
@@ -64,8 +65,31 @@ userSchema.pre<IUserModel>("save", function (next: NextFunction) {
         next();
       });
     });
+  } else {
+    next();
   }
 });
+
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+  bcrypt.compare(plainPassword, this.password, (err, isMatch) => {
+    if (err) {
+      return cb(err);
+    }
+    cb(null, isMatch);
+  });
+};
+
+userSchema.methods.generateToken = function (cb) {
+  const user = this;
+  const token = jwt.sign(user._id.toHexString(), "secretToken");
+  user.token = token;
+  user.save((err, user) => {
+    if (err) {
+      return cb(err);
+    }
+    cb(null, user);
+  });
+};
 
 const User: Model<IUserModel> = model<IUserModel>("User", userSchema);
 export default User;
