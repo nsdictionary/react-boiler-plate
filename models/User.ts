@@ -1,7 +1,8 @@
-import { Schema, model, Model, Document } from "mongoose";
+import { Document, model, Model, Schema } from "mongoose";
 import { NextFunction } from "express";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import config from "../config/key";
 
 export interface IUser {
   email: string;
@@ -13,12 +14,15 @@ export interface IUser {
   token?: string;
   tokenExp?: number;
 }
-
-export interface IUserModel extends IUser, Document {
-  fullName(): string;
+interface IUserDocument extends IUser, Document {
+  comparePassword(plainPassword: string, cb): void;
+  generateToken(cb): void;
+}
+interface IUserModel extends Model<IUserDocument> {
+  findByToken(token: string, cb): void;
 }
 
-const userSchema: Schema<IUserModel> = new Schema({
+const userSchema = new Schema<IUserDocument, IUserModel>({
   name: {
     type: String,
     maxlength: 50,
@@ -49,7 +53,7 @@ const userSchema: Schema<IUserModel> = new Schema({
   },
 });
 
-userSchema.pre<IUserModel>("save", function (next: NextFunction) {
+userSchema.pre<IUserDocument>("save", function (next: NextFunction) {
   const user = this;
   if (user.isModified("password")) {
     const saltRounds = 10;
@@ -70,7 +74,7 @@ userSchema.pre<IUserModel>("save", function (next: NextFunction) {
   }
 });
 
-userSchema.methods.comparePassword = function (plainPassword, cb) {
+userSchema.methods.comparePassword = function (plainPassword: string, cb) {
   bcrypt.compare(plainPassword, this.password, (err, isMatch) => {
     if (err) {
       return cb(err);
@@ -81,7 +85,7 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
 
 userSchema.methods.generateToken = function (cb) {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), "secretToken");
+  const token = jwt.sign(user._id.toHexString(), config.jwtSecret);
   user.token = token;
   user.save((err, user) => {
     if (err) {
@@ -91,5 +95,17 @@ userSchema.methods.generateToken = function (cb) {
   });
 };
 
-const User: Model<IUserModel> = model<IUserModel>("User", userSchema);
+userSchema.statics.findByToken = function (token: string, cb) {
+  const user = this;
+  jwt.verify(token, config.jwtSecret, function (err, decoded) {
+    user.findOne({ _id: decoded, token: token }, (err, user) => {
+      if (err) {
+        return cb(err);
+      }
+      cb(null, user);
+    });
+  });
+};
+
+const User = model<IUserDocument, IUserModel>("User", userSchema);
 export default User;

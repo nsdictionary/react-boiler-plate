@@ -3,7 +3,8 @@ import * as Mongoose from "mongoose";
 import * as BodyParser from "body-parser";
 import * as CookieParser from "cookie-parser";
 import config from "./config/key";
-import User from "./models/User";
+import User, { IUser } from "./models/User";
+import auth from "./middleware/auth";
 
 const app = express();
 const port = 5000;
@@ -25,7 +26,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post("/register", async (req, res) => {
+app.post("/api/users/register", async (req, res) => {
   const user = new User(req.body);
   await user.save((err, userInfo) => {
     if (err) {
@@ -35,7 +36,7 @@ app.post("/register", async (req, res) => {
   });
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/users/login", (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.json({ ok: false, err: "User not found" });
@@ -57,6 +58,22 @@ app.post("/login", (req, res) => {
           .json({ ok: true, userId: user._id });
       });
     });
+  });
+});
+
+app.get("/api/users/auth", auth, (req, res) => {
+  // @ts-ignore
+  const user: IUser = req.user;
+  res.status(200).json({
+    ok: true,
+    // @ts-ignore
+    userId: user._id,
+    isAdmin: user.role === 0 ? false : true,
+    isAuth: true,
+    email: user.email,
+    lastname: user.lastname,
+    role: user.role,
+    image: user.image,
   });
 });
 

@@ -8,4 +8,5 @@ dotenv.config({ path: `./config/.env.${nodeEnv}` });
 
 export default {
   mongoURI: process.env.MONGO_URI,
+  jwtSecret: process.env.JWT_SECRET,
 };
