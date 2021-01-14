@@ -61,20 +61,31 @@ app.post("/api/users/login", (req, res) => {
   });
 });
 
-app.get("/api/users/auth", auth, (req, res) => {
-  // @ts-ignore
-  const user: IUser = req.user;
+app.get("/api/users/auth", auth, (req: any, res) => {
   res.status(200).json({
     ok: true,
-    // @ts-ignore
-    userId: user._id,
-    isAdmin: user.role === 0 ? false : true,
+    userId: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
-    email: user.email,
-    lastname: user.lastname,
-    role: user.role,
-    image: user.image,
+    email: req.user.email,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image,
   });
+});
+
+app.get("/api/users/logout", auth, (req: any, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { token: "" },
+    {},
+    (err, user) => {
+      if (err) {
+        return res.json({ ok: false, err });
+      }
+      return res.status(200).send({ ok: true });
+    }
+  );
 });
 
 app.listen(port, () => {
