@@ -23,7 +23,6 @@ app.use(CookieParser());
 app.use(cors());
 
 app.use("/uploads", express.static("uploads"));
-
 app.use("/api/users", require("./routes/users"));
 app.use("/api/video", require("./routes/video"));
 
