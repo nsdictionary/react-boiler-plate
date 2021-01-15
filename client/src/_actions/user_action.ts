@@ -20,10 +20,8 @@ export async function loginUser(dataToSubmit: any) {
   };
 }
 
-export function auth() {
-  const request = axios
-    .get(`${USER_SERVER}/auth`)
-    .then((response) => response.data);
+export async function auth() {
+  const request = await axios.get(`${USER_SERVER}/auth`);
 
   return {
     type: AUTH_USER,
