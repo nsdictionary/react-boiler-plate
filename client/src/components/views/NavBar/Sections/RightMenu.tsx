@@ -33,6 +33,9 @@ const RightMenu = (props: any) => {
   } else {
     return (
       <Menu mode={props.mode}>
+        <Menu.Item key="upload">
+          <Link to="/video/upload">Video</Link>
+        </Menu.Item>
         <Menu.Item key="logout">
           <a href="#/" onClick={logoutHandler}>
             Logout
