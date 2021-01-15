@@ -4,6 +4,7 @@ import axios from "axios";
 import { USER_SERVER } from "../../../../Config";
 import { withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const RightMenu = (props: any) => {
   const user = useSelector((state: any) => state.user);
@@ -18,14 +19,14 @@ const RightMenu = (props: any) => {
     });
   };
 
-  if (user.userData && !user.userData.isAuth) {
+  if (user.userData?.data && !user.userData?.data?.isAuth) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
-          <a href="/login">Signin</a>
+          <Link to="/login">Signin</Link>
         </Menu.Item>
         <Menu.Item key="app">
-          <a href="/register">Signup</a>
+          <Link to="/register">Signup</Link>
         </Menu.Item>
       </Menu>
     );
@@ -33,7 +34,9 @@ const RightMenu = (props: any) => {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
+          <a href="#/" onClick={logoutHandler}>
+            Logout
+          </a>
         </Menu.Item>
       </Menu>
     );
