@@ -3,7 +3,7 @@ import * as Mongoose from "mongoose";
 import * as BodyParser from "body-parser";
 import * as CookieParser from "cookie-parser";
 import config from "./config/key";
-import User, { IUser } from "./models/User";
+import User from "./models/User";
 import auth from "./middleware/auth";
 
 const app = express();

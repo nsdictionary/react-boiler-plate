@@ -4,7 +4,7 @@ const nodeEnv =
   process.env.NODE_ENV && process.env.NODE_ENV.trim().toLowerCase() == "prod"
     ? "prod"
     : "dev";
-dotenv.config({ path: `./config/.env.${nodeEnv}` });
+dotenv.config({ path: `./server/config/.env.${nodeEnv}` });
 
 export default {
   mongoURI: process.env.MONGO_URI,
