@@ -39,7 +39,6 @@ const RegisterPage = (props: any) => {
     };
 
     dispatch(registerUser(body)).then((res) => {
-      console.log(res);
       if (res.payload.data?.ok) {
         props.history.push("/login");
       } else {
