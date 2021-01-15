@@ -11,7 +11,7 @@ const LandingPage = (props: any) => {
         <span style={{ fontSize: "2rem" }}>Let's Start Coding!</span>
       </div>
       <div style={{ float: "right" }}>
-        Thanks For Using This Boiler Plate by John Ahn
+        Thanks For Using This Boiler Plate by Samuel Ryu
       </div>
     </>
   );
