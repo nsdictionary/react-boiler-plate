@@ -13,10 +13,8 @@ export function registerUser(dataToSubmit: any) {
   };
 }
 
-export function loginUser(dataToSubmit: any) {
-  const request = axios
-    .post(`${USER_SERVER}/login`, dataToSubmit)
-    .then((response) => response.data);
+export async function loginUser(dataToSubmit: any) {
+  const request = await axios.post(`${USER_SERVER}/login`, dataToSubmit);
 
   return {
     type: LOGIN_USER,

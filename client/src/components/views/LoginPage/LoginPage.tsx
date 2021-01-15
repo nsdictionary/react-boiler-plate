@@ -23,15 +23,13 @@ const LoginPage = (props: any) => {
       password: Password,
     };
 
-    dispatch(loginUser(body));
-
-    //   .then((res) => {
-    //   if (res.payload.data) {
-    //     props.history.push("/");
-    //   } else {
-    //     alert("Error");
-    //   }
-    // });
+    dispatch(loginUser(body)).then((res) => {
+      if (res.payload.data?.ok) {
+        props.history.push("/");
+      } else {
+        alert("Error");
+      }
+    });
   };
 
   return (
@@ -59,9 +57,4 @@ const LoginPage = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return { loginResult: state };
-};
-
 export default LoginPage;
-// export default connect(mapStateToProps)(LoginPage);
