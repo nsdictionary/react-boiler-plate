@@ -2,10 +2,8 @@ import axios from "axios";
 import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from "./types";
 import { USER_SERVER } from "../Config";
 
-export function registerUser(dataToSubmit: any) {
-  const request = axios
-    .post(`${USER_SERVER}/register`, dataToSubmit)
-    .then((response) => response.data);
+export async function registerUser(dataToSubmit: any) {
+  const request = await axios.post(`${USER_SERVER}/register`, dataToSubmit);
 
   return {
     type: REGISTER_USER,
