@@ -1,10 +1,9 @@
-import * as express from "express";
 import User from "../models/User";
 import auth from "../middleware/auth";
+import { Router } from "express";
+const router = Router();
 
-const router = express.Router();
-
-router.post("/api/users/register", async (req, res) => {
+router.post("/register", async (req, res) => {
   const user = new User(req.body);
   await user.save((err, userInfo) => {
     if (err) {
@@ -14,7 +13,7 @@ router.post("/api/users/register", async (req, res) => {
   });
 });
 
-router.post("/api/users/login", (req, res) => {
+router.post("/login", (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.json({ ok: false, err: "User not found" });
@@ -39,7 +38,7 @@ router.post("/api/users/login", (req, res) => {
   });
 });
 
-router.get("/api/users/auth", auth, (req: any, res) => {
+router.get("/auth", auth, (req: any, res) => {
   res.status(200).json({
     ok: true,
     userId: req.user._id,
@@ -52,7 +51,7 @@ router.get("/api/users/auth", auth, (req: any, res) => {
   });
 });
 
-router.get("/api/users/logout", auth, (req: any, res) => {
+router.get("/logout", auth, (req: any, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     { token: "" },
@@ -66,4 +65,4 @@ router.get("/api/users/logout", auth, (req: any, res) => {
   );
 });
 
-export default router;
+module.exports = router;

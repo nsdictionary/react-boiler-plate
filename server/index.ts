@@ -3,7 +3,6 @@ import * as Mongoose from "mongoose";
 import * as BodyParser from "body-parser";
 import * as CookieParser from "cookie-parser";
 import * as cors from "cors";
-import UserRouter from "./routes/users";
 import config from "./config/key";
 
 const app = express();
@@ -23,7 +22,7 @@ Mongoose.connect(config.mongoURI, {
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
-app.use("/api/users", UserRouter);
+app.use("/api/users/", require("./routes/users"));
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
