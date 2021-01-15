@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { Typography, Button, Form, Input, Icon } from "antd";
+import axios from "axios";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -43,6 +44,22 @@ const VideoUploadPage = () => {
     setCategory(e.currentTarget.value);
   };
 
+  const onDrop = (files: any) => {
+    let formData = new FormData();
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+    formData.append("file", files[0]);
+
+    axios.post("/api/video/uploadfiles", formData, config).then((res) => {
+      console.log(res);
+      if (res.data?.ok) {
+      } else {
+        alert("video upload failed");
+      }
+    });
+  };
+
   return (
     <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
@@ -63,7 +80,7 @@ const VideoUploadPage = () => {
             }}
           >
             {/*Drop zone*/}
-            <Dropzone>
+            <Dropzone onDrop={onDrop} multiple={false} maxSize={100000}>
               {({ getRootProps, getInputProps }) => (
                 <div
                   style={{
