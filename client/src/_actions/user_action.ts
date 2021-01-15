@@ -29,10 +29,8 @@ export async function auth() {
   };
 }
 
-export function logoutUser() {
-  const request = axios
-    .get(`${USER_SERVER}/logout`)
-    .then((response) => response.data);
+export async function logoutUser() {
+  const request = await axios.get(`${USER_SERVER}/logout`);
 
   return {
     type: LOGOUT_USER,
