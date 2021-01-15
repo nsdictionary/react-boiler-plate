@@ -2,10 +2,24 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import "antd/dist/antd.css";
+import { applyMiddleware, createStore } from "redux";
+import promiseMiddleware from "redux-promise";
+import ReduxThunk from "redux-thunk";
+import Reducer from "./_reducer";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+const store = createStore(
+  Reducer,
+  composeWithDevTools(applyMiddleware(promiseMiddleware, ReduxThunk))
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
