@@ -1,6 +1,5 @@
 import React from "react";
 import { FaCode } from "react-icons/fa";
-import { withRouter } from "react-router-dom";
 
 const LandingPage = (props: any) => {
   return (
@@ -17,4 +16,4 @@ const LandingPage = (props: any) => {
   );
 };
 
-export default withRouter(LandingPage);
+export default LandingPage;

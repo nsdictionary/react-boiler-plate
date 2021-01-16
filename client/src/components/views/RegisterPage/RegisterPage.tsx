@@ -65,10 +65,10 @@ const RegisterPage = (props: any) => {
           };
 
           dispatch(registerUser(dataToSubmit)).then((response) => {
-            if (response.payload?.data?.ok) {
+            if (response.payload?.ok) {
               props.history.push("/login");
             } else {
-              alert(response.payload?.data?.err?.errmsg);
+              alert(response.payload?.err?.errmsg);
             }
           });
 

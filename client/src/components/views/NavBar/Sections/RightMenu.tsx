@@ -19,20 +19,20 @@ const RightMenu = (props: any) => {
     });
   };
 
-  if (user.userData?.data && !user.userData?.data?.isAuth) {
+  if (user.userData && !user.userData.isAuth) {
     return (
       <Menu mode={props.mode}>
-        <Menu.Item key="mail">
+        <Menu.Item key="/login">
           <Link to="/login">Signin</Link>
         </Menu.Item>
-        <Menu.Item key="app">
+        <Menu.Item key="/register">
           <Link to="/register">Signup</Link>
         </Menu.Item>
       </Menu>
     );
   } else {
     return (
-      <Menu mode={props.mode}>
+      <Menu mode={props.mode} selectedKeys={[props.location.pathname]}>
         <Menu.Item key="logout">
           <a href="#/" onClick={logoutHandler}>
             Logout

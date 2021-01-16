@@ -7,7 +7,7 @@ export async function registerUser(dataToSubmit: any) {
 
   return {
     type: REGISTER_USER,
-    payload: request,
+    payload: request.data,
   };
 }
 
@@ -16,7 +16,7 @@ export async function loginUser(dataToSubmit: any) {
 
   return {
     type: LOGIN_USER,
-    payload: request,
+    payload: request.data,
   };
 }
 
@@ -25,7 +25,7 @@ export async function auth() {
 
   return {
     type: AUTH_USER,
-    payload: request,
+    payload: request.data,
   };
 }
 
@@ -34,6 +34,6 @@ export async function logoutUser() {
 
   return {
     type: LOGOUT_USER,
-    payload: request,
+    payload: request.data,
   };
 }

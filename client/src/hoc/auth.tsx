@@ -13,9 +13,9 @@ const Auth = (
 
     useEffect(() => {
       dispatch(auth()).then((res) => {
-        if (res.payload?.data?.ok) {
+        if (res.payload?.ok) {
           // logged in
-          if (adminRoute && !res.payload.data.isAdmin) {
+          if (adminRoute && !res.payload.isAdmin) {
             props.history.push("/");
           } else if (option === false) {
             props.history.push("/");

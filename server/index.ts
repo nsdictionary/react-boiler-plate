@@ -8,11 +8,6 @@ import config from "./config/key";
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(BodyParser.urlencoded({ extended: true }));
-app.use(BodyParser.json());
-app.use(CookieParser());
-app.use(cors());
-
 Mongoose.connect(config.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -22,6 +17,12 @@ Mongoose.connect(config.mongoURI, {
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
+app.use(BodyParser.urlencoded({ extended: true }));
+app.use(BodyParser.json());
+app.use(CookieParser());
+app.use(cors());
+
+app.use("/uploads", express.static("uploads"));
 app.use("/api/users/", require("./routes/users"));
 
 app.listen(port, () => {
