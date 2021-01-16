@@ -32,8 +32,8 @@ const RightMenu = (props: any) => {
     );
   } else {
     return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="upload">
+      <Menu mode={props.mode} selectedKeys={[props.location.pathname]}>
+        <Menu.Item key="/video/upload">
           <Link to="/video/upload">Video</Link>
         </Menu.Item>
         <Menu.Item key="logout">
