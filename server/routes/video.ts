@@ -3,6 +3,7 @@ import * as multer from "multer";
 import { Router } from "express";
 import * as ffmpeg from "fluent-ffmpeg";
 import path = require("path");
+import Video from "../models/Video";
 const router = Router();
 
 let storage = multer.diskStorage({
@@ -44,8 +45,8 @@ router.post("/thumbnail", (req, res) => {
 
   // get video info (duration)
   ffmpeg.ffprobe(req.body.filePath, function (err, metadata) {
-    console.dir(metadata);
-    console.log(metadata.format.duration);
+    // console.dir(metadata);
+    // console.log(metadata.format.duration);
 
     fileDuration = metadata.format.duration;
   });
@@ -76,6 +77,17 @@ router.post("/thumbnail", (req, res) => {
       // %b input basename ( filename w/o extension )
       filename: "thumbnail-%b.png",
     });
+});
+
+router.post("/uploadVideo", (req, res) => {
+  const video = new Video(req.body);
+
+  video.save((err, video) => {
+    if (err) {
+      return res.status(400).json({ ok: false, err });
+    }
+    return res.status(200).json({ ok: true });
+  });
 });
 
 module.exports = router;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { Typography, Button, Form, Input, Icon } from "antd";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -22,11 +23,13 @@ const CategoryOptions: IOption[] = [
   { value: 3, label: "Pets & Animals" },
 ];
 
-const VideoUploadPage = () => {
+const VideoUploadPage = (props: any) => {
+  const user = useSelector((state: any) => state.user);
+
   const [VideoTitle, setVideoTitle] = useState("");
   const [Description, setDescription] = useState("");
-  const [Private, setPrivate] = useState(0);
-  const [Category, setCategory] = useState("Film & Animation");
+  const [Privacy, setPrivacy] = useState(0);
+  const [Categories, setCategories] = useState("Film & Animation");
   const [FilePath, setFilePath] = useState("");
   const [Duration, setDuration] = useState("");
   const [Thumbnail, setThumbnail] = useState("");
@@ -40,11 +43,50 @@ const VideoUploadPage = () => {
   };
 
   const onPrivateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPrivate(+e.currentTarget.value);
+    setPrivacy(+e.currentTarget.value);
   };
 
   const onCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.currentTarget.value);
+    setCategories(e.currentTarget.value);
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (user.userData && !user.userData.isAuth) {
+      return alert("Please Log in First");
+    }
+
+    if (
+      VideoTitle === "" ||
+      Description === "" ||
+      Categories === "" ||
+      FilePath === "" ||
+      Duration === "" ||
+      Thumbnail === ""
+    ) {
+      return alert("Please first fill all the fields");
+    }
+
+    const variables = {
+      writer: user.userData.data?.userId,
+      title: VideoTitle,
+      description: Description,
+      privacy: Privacy,
+      filePath: FilePath,
+      category: Categories,
+      duration: Duration,
+      thumbnail: Thumbnail,
+    };
+
+    axios.post("/api/video/uploadVideo", variables).then((res) => {
+      if (res.data?.ok) {
+        alert("video Uploaded Successfully");
+        props.history.push("/");
+      } else {
+        alert("Failed to upload video");
+      }
+    });
   };
 
   const onDrop = (files: any) => {
@@ -153,10 +195,6 @@ const VideoUploadPage = () => {
                 <img src={`http://localhost:5000/${Thumbnail}`} alt="haha" />
               </div>
             )}
-
-            <div>
-              <img src={""} alt={""} />
-            </div>
           </div>
           <br />
           <br />
@@ -191,7 +229,7 @@ const VideoUploadPage = () => {
           <br />
           <br />
 
-          <Button type="primary" size="large">
+          <Button type="primary" size="large" onClick={onSubmit}>
             Submit
           </Button>
         </Form>

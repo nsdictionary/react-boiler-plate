@@ -19,7 +19,7 @@ const RightMenu = (props: any) => {
     });
   };
 
-  if (user.userData?.data && !user.userData?.data?.isAuth) {
+  if (user.userData && !user.userData.isAuth) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
