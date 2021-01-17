@@ -39,7 +39,7 @@ const VideoDetailPage = (props: any) => {
                 />]}
             >
               <List.Item.Meta
-                avatar={<Avatar src={Video.writer && Video.writer.image} />}
+                avatar={<Avatar src={Video.writer && Video.writer.image}/>}
                 title={
                   <>
                     <span>{Video.writer.name}</span><br/>

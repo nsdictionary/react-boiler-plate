@@ -1,8 +1,6 @@
 import React from "react";
 import {useLocation} from "react-router-dom";
 import { Menu } from "antd";
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 const LeftMenu = (props: any) => {
   const location = useLocation();
