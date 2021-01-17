@@ -3,6 +3,7 @@ import {Avatar, Col, List, Row} from "antd";
 import axios from "axios";
 import SideVideo from "./Sections/SideVideo";
 import Subscriber from "./Sections/Subscriber";
+import LikeDislikes from "./Sections/LikeDislikes";
 
 const VideoDetailPage = (props: any) => {
   const videoId = props.match.params.videoId
@@ -33,10 +34,16 @@ const VideoDetailPage = (props: any) => {
             />
             <List.Item
               actions={[
+                <LikeDislikes
+                  video
+                  videoId={videoId}
+                  userId={localStorage.getItem('userId')}
+                />,
                 <Subscriber
                   userTo={Video.writer._id}
                   userFrom={localStorage.getItem('userId')}
-                />]}
+                />
+              ]}
             >
               <List.Item.Meta
                 avatar={<Avatar src={Video.writer && Video.writer.image}/>}

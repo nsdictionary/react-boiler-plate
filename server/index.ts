@@ -26,6 +26,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/video", require("./routes/video"));
 app.use('/api/subscribe', require('./routes/subscribe'));
+app.use('/api/like', require('./routes/like'));
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
