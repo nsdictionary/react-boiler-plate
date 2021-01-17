@@ -19,7 +19,7 @@ const VideoDetailPage = (props: any) => {
           alert('Failed to get video Info')
         }
       })
-  }, [props.playingId]);
+  }, [videoId]);
 
   if (Video.writer) {
     return (

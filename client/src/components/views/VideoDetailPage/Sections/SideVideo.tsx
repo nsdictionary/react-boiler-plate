@@ -23,28 +23,30 @@ const SideVideo = (props: any) => {
     const minutes = Math.floor(video.duration / 60);
     const seconds = Math.floor(video.duration - minutes * 60);
 
-    return <div key={index} style={{display: 'flex', marginTop: '1rem', padding: '0 2rem'}}>
-      <div style={{position: "relative", width: '40%', marginRight: '1rem'}}>
-        <Link to={`/video/${video._id}`} style={{color: 'gray'}}>
-          <img
-            style={{width: '100%', height: '100%'}}
-            src={`http://localhost:5000/${video.thumbnail}`}
-            alt="thumbnail"
-          />
-          <div className="duration">
-            <span>{minutes} : {seconds}</span>
-          </div>
-        </Link>
-      </div>
+    return (
+      <div key={index} style={{display: 'flex', marginTop: '1rem', padding: '0 2rem'}}>
+        <div style={{position: "relative", width: '40%', marginRight: '1rem'}}>
+          <Link to={`/video/${video._id}`} style={{color: 'gray'}}>
+            <img
+              style={{width: '100%', height: '100%'}}
+              src={`http://localhost:5000/${video.thumbnail}`}
+              alt="thumbnail"
+            />
+            <div className="duration">
+              <span>{minutes} : {seconds}</span>
+            </div>
+          </Link>
+        </div>
 
-      <div style={{width: '50%'}}>
-        <Link to={`/video/${video._id}`} style={{color: 'gray'}}>
-          <span style={{fontSize: '1rem', color: 'black'}}>{video.title}  </span><br/>
-          <span>{video.writer.name}</span><br/>
-          <span>{video.views}</span><br/>
-        </Link>
+        <div style={{width: '50%'}}>
+          <Link to={`/video/${video._id}`} style={{color: 'gray'}}>
+            <span style={{fontSize: '1rem', color: 'black'}}>{video.title}  </span><br/>
+            <span>{video.writer.name}</span><br/>
+            <span>{video.views}</span><br/>
+          </Link>
+        </div>
       </div>
-    </div>
+    );
   })
 
   return (
