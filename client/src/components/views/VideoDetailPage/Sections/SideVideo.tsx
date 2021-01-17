@@ -24,7 +24,7 @@ const SideVideo = () => {
       <div style={{position: "relative", width: '40%', marginRight: '1rem'}}>
         <a href={`/video/${video._id}`} style={{color: 'gray'}}>
           <img
-            style={{width: '100%'}}
+            style={{width: '100%', height: '100%'}}
             src={`http://localhost:5000/${video.thumbnail}`}
             alt="thumbnail"
           />

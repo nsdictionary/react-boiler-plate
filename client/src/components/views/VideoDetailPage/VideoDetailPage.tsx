@@ -33,7 +33,14 @@ const VideoDetailPage = (props: any) => {
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar src={Video.writer && Video.writer.image} />}
-                title={<a href="https://ant.design">{Video.title}</a>}
+                title={
+                  <>
+                    <span>{Video.writer.name}</span><br/>
+                    <a href="https://ant.design">
+                      <span style={{fontSize: "1rem"}}>{Video.title}</span>
+                    </a>
+                  </>
+                }
                 description={Video.description}
               />
             </List.Item>
