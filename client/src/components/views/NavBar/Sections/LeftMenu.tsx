@@ -1,24 +1,22 @@
 import React from "react";
+import {useLocation} from "react-router-dom";
 import { Menu } from "antd";
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 const LeftMenu = (props: any) => {
+  const location = useLocation();
+
   return (
-    <Menu mode={props.mode}>
-      <Menu.Item key="Home">
+    <Menu mode={props.mode} selectedKeys={[location.pathname]}>
+      <Menu.Item key="/">
         <a href="/">Home</a>
       </Menu.Item>
-      <SubMenu title={<span>Blogs</span>}>
-        <MenuItemGroup title="Item 1">
-          <Menu.Item key="setting:1">Option 1</Menu.Item>
-          <Menu.Item key="setting:2">Option 2</Menu.Item>
-        </MenuItemGroup>
-        <MenuItemGroup title="Item 2">
-          <Menu.Item key="setting:3">Option 3</Menu.Item>
-          <Menu.Item key="setting:4">Option 4</Menu.Item>
-        </MenuItemGroup>
-      </SubMenu>
+      {props.user?.userData && props.user?.userData?.isAuth && (
+        <Menu.Item key="/subscription">
+          <a href="/subscription">Subscription</a>
+        </Menu.Item>
+      )}
     </Menu>
   );
 };
