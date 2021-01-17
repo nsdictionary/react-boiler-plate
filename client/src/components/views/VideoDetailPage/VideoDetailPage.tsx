@@ -4,6 +4,7 @@ import axios from "axios";
 import SideVideo from "./Sections/SideVideo";
 import Subscriber from "./Sections/Subscriber";
 import LikeDislikes from "./Sections/LikeDislikes";
+import Loading from "../../Loading";
 
 const VideoDetailPage = (props: any) => {
   const videoId = props.match.params.videoId
@@ -66,7 +67,7 @@ const VideoDetailPage = (props: any) => {
     );
   } else {
     return (
-      <div>Loading...</div>
+      <Loading />
     )
   }
 };

@@ -9,6 +9,7 @@ import Footer from "./components/views/Footer/Footer";
 import VideoUploadPage from "./components/views/VideoUploadPage/VideoUploadPage";
 import VideoDetailPage from "./components/views/VideoDetailPage/VideoDetailPage";
 import SubscriptionPage from "./components/views/SubscriptionPage/SubscriptionPage";
+import Loading from "./components/Loading";
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -16,7 +17,7 @@ import SubscriptionPage from "./components/views/SubscriptionPage/SubscriptionPa
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <NavBar />
       <div style={{ paddingTop: "69px", minHeight: "calc(100vh - 80px)" }}>
         <Switch>
