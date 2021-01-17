@@ -47,7 +47,7 @@ const VideoDetailPage = (props: any) => {
           </div>
         </Col>
         <Col lg={6} xs={24}>
-          <SideVideo />
+          <SideVideo playingId={Video._id}/>
         </Col>
       </Row>
     );

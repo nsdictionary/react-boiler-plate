@@ -50,8 +50,7 @@ const LandingPage = (props: any) => {
     <div style={{ width: '85%', margin: '3rem auto' }}>
       <Title level={2} > Recommended </Title>
       <hr />
-
-      <Row gutter={16}>
+      <Row style={{marginTop: "1.2rem"}} gutter={16}>
         {renderCards}
       </Row>
     </div>

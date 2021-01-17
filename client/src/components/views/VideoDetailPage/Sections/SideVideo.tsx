@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
-const SideVideo = () => {
+const SideVideo = (props: any) => {
   const [SideVideos, setSideVideos] = useState<any>([])
 
   useEffect(() => {
@@ -9,7 +9,8 @@ const SideVideo = () => {
       .then(res => {
         if (res.data.ok) {
           console.log(res.data.videos)
-          setSideVideos(res.data.videos)
+          setSideVideos(res.data.videos
+            .filter((video: any) => video._id !== props.playingId))
         } else {
           alert('Failed to get Videos')
         }
