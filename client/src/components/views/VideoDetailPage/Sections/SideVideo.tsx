@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
+
 
 const SideVideo = (props: any) => {
   const [SideVideos, setSideVideos] = useState<any>([])
@@ -8,7 +10,7 @@ const SideVideo = (props: any) => {
     axios.get('/api/video/getVideos')
       .then(res => {
         if (res.data.ok) {
-          console.log(res.data.videos)
+          // console.log(res.data.videos)
           setSideVideos(res.data.videos
             .filter((video: any) => video._id !== props.playingId))
         } else {
@@ -23,7 +25,7 @@ const SideVideo = (props: any) => {
 
     return <div key={index} style={{display: 'flex', marginTop: '1rem', padding: '0 2rem'}}>
       <div style={{position: "relative", width: '40%', marginRight: '1rem'}}>
-        <a href={`/video/${video._id}`} style={{color: 'gray'}}>
+        <Link to={`/video/${video._id}`} style={{color: 'gray'}}>
           <img
             style={{width: '100%', height: '100%'}}
             src={`http://localhost:5000/${video.thumbnail}`}
@@ -32,16 +34,15 @@ const SideVideo = (props: any) => {
           <div className="duration">
             <span>{minutes} : {seconds}</span>
           </div>
-        </a>
+        </Link>
       </div>
 
       <div style={{width: '50%'}}>
-        <a href={`/video/${video._id}`} style={{color: 'gray'}}>
+        <Link to={`/video/${video._id}`} style={{color: 'gray'}}>
           <span style={{fontSize: '1rem', color: 'black'}}>{video.title}  </span><br/>
           <span>{video.writer.name}</span><br/>
           <span>{video.views}</span><br/>
-          {/*<span>{minutes} : {seconds}</span><br/>*/}
-        </a>
+        </Link>
       </div>
     </div>
   })

@@ -14,13 +14,12 @@ const VideoDetailPage = (props: any) => {
     axios.post('/api/video/getVideo', {videoId})
       .then(res => {
         if (res.data.ok) {
-          console.log(res.data.video)
           setVideo(res.data.video)
         } else {
           alert('Failed to get video Info')
         }
       })
-  }, []);
+  }, [props.playingId]);
 
   if (Video.writer) {
     return (

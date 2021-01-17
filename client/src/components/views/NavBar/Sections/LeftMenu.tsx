@@ -1,6 +1,7 @@
 import React from "react";
 import {useLocation} from "react-router-dom";
 import { Menu } from "antd";
+import {Link} from "react-router-dom";
 
 const LeftMenu = (props: any) => {
   const location = useLocation();
@@ -8,11 +9,11 @@ const LeftMenu = (props: any) => {
   return (
     <Menu mode={props.mode} selectedKeys={[location.pathname]}>
       <Menu.Item key="/">
-        <a href="/">Home</a>
+        <Link to="/">Home</Link>
       </Menu.Item>
       {props.user?.userData && props.user?.userData?.isAuth && (
         <Menu.Item key="/subscription">
-          <a href="/subscription">Subscription</a>
+          <Link to="/subscription">Subscription</Link>
         </Menu.Item>
       )}
     </Menu>
