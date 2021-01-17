@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, Icon, Input, Button, Checkbox, Typography } from "antd";
 import { withRouter } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 
@@ -169,7 +170,7 @@ const LoginPage = (props: any) => {
                     Log in
                   </Button>
                 </div>
-                Or <a href="/register">register now!</a>
+                Or <Link to="/register">register now!</Link>
               </Form.Item>
             </form>
           </div>
