@@ -6,6 +6,7 @@ import Subscriber from "./Sections/Subscriber";
 import LikeDislikes from "./Sections/LikeDislikes";
 import Loading from "../../Loading";
 import {useSelector} from "react-redux";
+import Comments from "./Sections/Comments";
 
 const VideoDetailPage = (props: any) => {
   const user = useSelector((state: any) => state.user);
@@ -18,6 +19,16 @@ const VideoDetailPage = (props: any) => {
       .then(res => {
         if (res.data.ok) {
           setVideo(res.data.video)
+        } else {
+          alert('Failed to get video Info')
+        }
+      })
+
+    axios.post('/api/comment/getComments', {videoId})
+      .then(res => {
+        if (res.data?.ok) {
+          console.log('res.data.comments', res.data.comments)
+          setCommentLists(res.data.comments)
         } else {
           alert('Failed to get video Info')
         }
@@ -42,6 +53,10 @@ const VideoDetailPage = (props: any) => {
          userFrom={localStorage.getItem('userId')}
        />)
       }
+    }
+
+    const updateComment = (newComment: any) => {
+      setCommentLists(CommentLists.concat(newComment))
     }
 
     return (
@@ -69,6 +84,11 @@ const VideoDetailPage = (props: any) => {
                 description={Video.description}
               />
             </List.Item>
+            <Comments
+              CommentLists={CommentLists}
+              postId={Video._id}
+              refreshFunction={updateComment}
+            />
           </div>
         </Col>
         <Col lg={6} xs={24}>
