@@ -1,19 +1,32 @@
-import User from "../models/User";
+import * as express from "express";
+import User, { IUser } from "../models/User";
 import auth from "../middleware/auth";
 import { Router } from "express";
 const router = Router();
 
-router.post("/register", async (req, res) => {
-  const user = new User(req.body);
-  await user.save((err, userInfo) => {
-    if (err) {
-      return res.json({ ok: false, err });
-    }
-    return res.status(200).json({ ok: true });
-  });
-});
+declare module "express" {
+  interface IRequestUser extends IUser {
+    _id: string;
+  }
+  interface Request {
+    user: IRequestUser;
+  }
+}
 
-router.post("/login", (req, res) => {
+router.post(
+  "/register",
+  async (req: express.Request, res: express.Response) => {
+    const user = new User(req.body);
+    await user.save((err, userInfo) => {
+      if (err) {
+        return res.json({ ok: false, err });
+      }
+      return res.status(200).json({ ok: true });
+    });
+  }
+);
+
+router.post("/login", (req: express.Request, res: express.Response) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.json({ ok: false, err: "User not found" });
@@ -38,7 +51,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/auth", auth, (req: any, res) => {
+router.get("/auth", auth, (req: express.Request, res: express.Response) => {
   res.status(200).json({
     ok: true,
     userId: req.user._id,
@@ -51,7 +64,7 @@ router.get("/auth", auth, (req: any, res) => {
   });
 });
 
-router.get("/logout", auth, (req: any, res) => {
+router.get("/logout", auth, (req: express.Request, res: express.Response) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     { token: "" },
