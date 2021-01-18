@@ -17,7 +17,7 @@ const SideVideo = (props: any) => {
           alert('Failed to get Videos')
         }
       })
-  }, [])
+  }, [props.playingId])
 
   const sideVideoItem = SideVideos.map((video: any, index: number) => {
     const minutes = Math.floor(video.duration / 60);
