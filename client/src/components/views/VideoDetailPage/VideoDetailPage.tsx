@@ -86,7 +86,7 @@ const VideoDetailPage = (props: any) => {
             </List.Item>
             <Comments
               CommentLists={CommentLists}
-              postId={Video._id}
+              videoId={Video._id}
               refreshFunction={updateComment}
             />
           </div>

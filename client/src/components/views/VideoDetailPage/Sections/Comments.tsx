@@ -20,7 +20,7 @@ const Comments = (props: any) => {
     const variables = {
       content: Comment,
       writer: user.userData.userId,
-      postId: props.postId
+      videoId: props.videoId
     }
 
     axios.post('/api/comment/saveComment', variables)
@@ -44,12 +44,12 @@ const Comments = (props: any) => {
             <React.Fragment key={index}>
               <SingleComment
                   comment={comment}
-                  postId={props.postId}
+                  videoId={props.videoId}
                   refreshFunction={props.refreshFunction}
               />
               <ReplyComment
                   CommentLists={props.CommentLists}
-                  postId={props.postId}
+                  videoId={props.videoId}
                   parentCommentId={comment._id}
                   refreshFunction={props.refreshFunction}
               />

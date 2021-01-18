@@ -24,7 +24,7 @@ router.post("/saveComment", (req, res) => {
 })
 
 router.post("/getComments", (req, res) => {
-  Comment.find({ "postId": req.body.videoId })
+  Comment.find({ "videoId": req.body.videoId })
     .populate('writer')
     .exec((err, comments) => {
       if (err) {

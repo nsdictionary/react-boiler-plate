@@ -7,15 +7,11 @@ const { TextArea } = Input;
 
 const SingleComment = (props: any) => {
   const user = useSelector((state: any) => state.user);
-  const [CommentValue, setCommentValue] = useState("")
-  const [OpenReply, setOpenReply] = useState(false)
+  const [CommentValue, setCommentValue] = useState<string>("")
+  const [OpenReply, setOpenReply] = useState<boolean>(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCommentValue(e.currentTarget.value)
-  }
-
-  const openReply = () => {
-    setOpenReply(!OpenReply)
   }
 
   const onSubmit = (e: React.FormEvent) => {
@@ -23,7 +19,7 @@ const SingleComment = (props: any) => {
 
     const variables = {
       writer: user.userData._id,
-      postId: props.postId,
+      videoId: props.videoId,
       responseTo: props.comment._id,
       content: CommentValue
     }
@@ -46,7 +42,7 @@ const SingleComment = (props: any) => {
       commentId={props.comment._id}
       userId={localStorage.getItem('userId')}
     />,
-    <span onClick={openReply} key="comment-basic-reply-to">Reply to </span>
+    <span onClick={()=>setOpenReply(!OpenReply)} key="comment-basic-reply-to">Reply to </span>
   ]
 
   return (
@@ -55,11 +51,7 @@ const SingleComment = (props: any) => {
         actions={actions}
         author={props.comment.writer.name}
         avatar={<Avatar src={props.comment.writer.image} alt="image"/>}
-        content={
-          <p>
-            {props.comment.content}
-          </p>
-        }
+        content={<p>{props.comment.content}</p>}
       ></Comment>
 
       {OpenReply &&
@@ -71,7 +63,9 @@ const SingleComment = (props: any) => {
             placeholder="write some comments"
         />
         <br />
-        <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
+        <Button
+            style={{ width: '20%', height: '52px', marginLeft: '2px' }}
+            onClick={onSubmit}>Submit</Button>
       </form>
       }
     </div>
