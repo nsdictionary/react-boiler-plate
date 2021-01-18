@@ -6,6 +6,7 @@ const Footer = () => {
     <div
       style={{
         height: "80px",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

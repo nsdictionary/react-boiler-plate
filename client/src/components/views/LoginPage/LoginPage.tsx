@@ -4,7 +4,7 @@ import { loginUser } from "../../../_actions/user_action";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, Icon, Input, Button, Checkbox, Typography } from "antd";
-import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -153,13 +153,13 @@ const LoginPage = (props: any) => {
                 >
                   Remember me
                 </Checkbox>
-                <a
+                <Link
                   className="login-form-forgot"
-                  href="/reset_user"
+                  to="/reset_user"
                   style={{ float: "right" }}
                 >
                   forgot password
-                </a>
+                </Link>
                 <div>
                   <Button
                     type="primary"
@@ -172,7 +172,7 @@ const LoginPage = (props: any) => {
                     Log in
                   </Button>
                 </div>
-                Or <a href="/register">register now!</a>
+                Or <Link to="/register">register now!</Link>
               </Form.Item>
             </form>
           </div>
@@ -182,4 +182,4 @@ const LoginPage = (props: any) => {
   );
 };
 
-export default withRouter(LoginPage);
+export default LoginPage;

@@ -2,12 +2,15 @@ import React from "react";
 import { Menu } from "antd";
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+import { Link, useLocation } from "react-router-dom";
 
 const LeftMenu = (props: any) => {
+  const location = useLocation();
+
   return (
-    <Menu mode={props.mode}>
-      <Menu.Item key="Home">
-        <a href="/">Home</a>
+    <Menu mode={props.mode} selectedKeys={[location.pathname]}>
+      <Menu.Item key="home">
+        <Link to="/">Home</Link>
       </Menu.Item>
       <SubMenu title={<span>Blogs</span>}>
         <MenuItemGroup title="Item 1">

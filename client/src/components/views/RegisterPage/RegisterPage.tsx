@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
 import { Form, Input, Button } from "antd";
-import { withRouter } from "react-router-dom";
 
 const formItemLayout = {
   labelCol: {
@@ -221,4 +220,4 @@ const RegisterPage = (props: any) => {
   );
 };
 
-export default withRouter(RegisterPage);
+export default RegisterPage;
