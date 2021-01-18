@@ -18,7 +18,7 @@ const SingleComment = (props: any) => {
     e.preventDefault();
 
     const variables = {
-      writer: user.userData._id,
+      writer: user.userData.userId,
       videoId: props.videoId,
       responseTo: props.comment._id,
       content: CommentValue

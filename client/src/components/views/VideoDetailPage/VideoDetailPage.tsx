@@ -56,7 +56,7 @@ const VideoDetailPage = (props: any) => {
     }
 
     const updateComment = (newComment: any) => {
-      setCommentLists(CommentLists.concat(newComment))
+      setCommentLists([...CommentLists, ...newComment]);
     }
 
     return (

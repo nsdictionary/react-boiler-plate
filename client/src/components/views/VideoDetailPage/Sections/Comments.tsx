@@ -47,12 +47,12 @@ const Comments = (props: any) => {
                   videoId={props.videoId}
                   refreshFunction={props.refreshFunction}
               />
-              <ReplyComment
-                  CommentLists={props.CommentLists}
-                  videoId={props.videoId}
-                  parentCommentId={comment._id}
-                  refreshFunction={props.refreshFunction}
-              />
+              {/*<ReplyComment*/}
+              {/*    CommentLists={props.CommentLists}*/}
+              {/*    videoId={props.videoId}*/}
+              {/*    parentCommentId={comment._id}*/}
+              {/*    refreshFunction={props.refreshFunction}*/}
+              {/*/>*/}
             </React.Fragment>
         )
       ))}
