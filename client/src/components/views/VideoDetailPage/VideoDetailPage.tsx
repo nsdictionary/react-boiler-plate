@@ -58,6 +58,17 @@ const VideoDetailPage = (props: any) => {
     const updateComment = (newComment: any) => {
       setCommentLists([...CommentLists, ...newComment]);
     }
+    const removeComment = (commentId: string) => {
+      axios.post('/api/comment/removeComment', {commentId})
+        .then(res => {
+          if (res.data?.ok) {
+            setCommentLists(CommentLists
+              .filter((comment:any) => comment._id !== commentId))
+          } else {
+            alert('Failed to remove Comment')
+          }
+        })
+    }
 
     return (
       <Row gutter={[16, 16]}>
@@ -88,6 +99,7 @@ const VideoDetailPage = (props: any) => {
               CommentLists={CommentLists}
               videoId={Video._id}
               refreshFunction={updateComment}
+              removeFunction={removeComment}
             />
           </div>
         </Col>

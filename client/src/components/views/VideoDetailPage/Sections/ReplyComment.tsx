@@ -21,12 +21,14 @@ const ReplyComment = (props: any) => {
               comment={comment}
               videoId={props.videoId}
               refreshFunction={props.refreshFunction}
+              removeFunction={props.removeFunction}
           />
           <ReplyComment
               CommentLists={props.CommentLists}
               parentCommentId={comment._id}
               videoId={props.videoId}
               refreshFunction={props.refreshFunction}
+              removeFunction={props.removeFunction}
           />
         </div>
         }

@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import { Comment, Avatar, Button, Input } from 'antd';
+import {Comment, Avatar, Button, Input, Tooltip, Icon} from 'antd';
 import axios from "axios";
 import {useSelector} from "react-redux";
 import LikeDislikes from "./LikeDislikes";
-const { TextArea } = Input;
+
+const {TextArea} = Input;
 
 const SingleComment = (props: any) => {
   const user = useSelector((state: any) => state.user);
@@ -36,14 +37,24 @@ const SingleComment = (props: any) => {
       })
   }
 
-  const actions = [
+  let actions = [
     <LikeDislikes
       comment
       commentId={props.comment._id}
       userId={localStorage.getItem('userId')}
     />,
-    <span onClick={()=>setOpenReply(!OpenReply)} key="comment-basic-reply-to">Reply to </span>
+    <span onClick={() => setOpenReply(!OpenReply)} key="comment-basic-reply-to">Reply to</span>
   ]
+
+  if (user.userData && user.userData?.isAuth
+    && user.userData.userId === props.comment.writer._id) {
+    actions.push(
+      <Tooltip title="Remove">
+        <Icon type="delete" onClick={()=>props.removeFunction(props.comment._id)}/>
+      </Tooltip>
+    );
+
+  }
 
   return (
     <div>
@@ -55,16 +66,16 @@ const SingleComment = (props: any) => {
       ></Comment>
 
       {OpenReply &&
-      <form style={{ display: 'flex' }} onSubmit={onSubmit}>
+      <form style={{display: 'flex'}} onSubmit={onSubmit}>
         <TextArea
-            style={{ width: '100%', borderRadius: '5px' }}
+            style={{width: '100%', borderRadius: '5px'}}
             onChange={handleChange}
             value={CommentValue}
             placeholder="write some comments"
         />
-        <br />
+        <br/>
         <Button
-            style={{ width: '20%', height: '52px', marginLeft: '2px' }}
+            style={{width: '20%', height: '52px', marginLeft: '2px'}}
             onClick={onSubmit}>Submit</Button>
       </form>
       }

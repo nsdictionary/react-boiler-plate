@@ -46,12 +46,14 @@ const Comments = (props: any) => {
                   comment={comment}
                   videoId={props.videoId}
                   refreshFunction={props.refreshFunction}
+                  removeFunction={props.removeFunction}
               />
               <ReplyComment
                   CommentLists={props.CommentLists}
                   videoId={props.videoId}
                   parentCommentId={comment._id}
                   refreshFunction={props.refreshFunction}
+                  removeFunction={props.removeFunction}
               />
             </React.Fragment>
         )
