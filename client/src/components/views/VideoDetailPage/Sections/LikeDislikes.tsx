@@ -24,7 +24,7 @@ const LikeDislikes = (props: any) => {
           setLikes(res.data.likes.length)
 
           //if I already click this like button or not
-          res.data.likes.map((like: any) => {
+          res.data.likes.forEach((like: any) => {
             if (like.userId === props.userId) {
               setLikeAction('liked')
             }
@@ -42,7 +42,7 @@ const LikeDislikes = (props: any) => {
           setDislikes(res.data.dislikes.length)
 
           //if I already click this like button or not
-          res.data.dislikes.map((dislike: any) => {
+          res.data.dislikes.forEach((dislike: any) => {
             if (dislike.userId === props.userId) {
               setDislikeAction('disliked')
             }
@@ -51,11 +51,66 @@ const LikeDislikes = (props: any) => {
           alert('Failed to get dislikes')
         }
       })
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const onLike = () => {
+    if (LikeAction === null) {
+      axios.post('/api/like/upLike', variable)
+        .then(res => {
+          if (res.data?.ok) {
+            setLikes(Likes + 1)
+            setLikeAction('liked')
+
+            //If dislike button is already clicked
+            if (DislikeAction !== null) {
+              setDislikeAction(null)
+              setDislikes(Dislikes - 1)
+            }
+          } else {
+            alert('Failed to increase the like')
+          }
+        })
+    } else {
+      axios.post('/api/like/unLike', variable)
+        .then(res => {
+          if (res.data?.ok) {
+            setLikes(Likes - 1)
+            setLikeAction(null)
+          } else {
+            alert('Failed to decrease the like')
+          }
+        })
+    }
   };
+
   const onDisLike = () => {
+    if (DislikeAction !== null) {
+      axios.post('/api/like/unDisLike', variable)
+        .then(res => {
+          if (res.data?.ok) {
+            setDislikes(Dislikes - 1)
+            setDislikeAction(null)
+          } else {
+            alert('Failed to decrease dislike')
+          }
+        })
+    } else {
+      axios.post('/api/like/upDisLike', variable)
+        .then(res => {
+          if (res.data?.ok) {
+            setDislikes(Dislikes + 1)
+            setDislikeAction('disliked')
+
+            //If dislike button is already clicked
+            if(LikeAction !== null ) {
+              setLikeAction(null)
+              setLikes(Likes - 1)
+            }
+          } else {
+            alert('Failed to increase dislike')
+          }
+        })
+    }
   };
 
   return (
