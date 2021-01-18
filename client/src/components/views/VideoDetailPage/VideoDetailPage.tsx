@@ -5,8 +5,10 @@ import SideVideo from "./Sections/SideVideo";
 import Subscriber from "./Sections/Subscriber";
 import LikeDislikes from "./Sections/LikeDislikes";
 import Loading from "../../Loading";
+import {useSelector} from "react-redux";
 
 const VideoDetailPage = (props: any) => {
+  const user = useSelector((state: any) => state.user);
   const videoId = props.match.params.videoId
   const [Video, setVideo] = useState<any>([])
   const [CommentLists, setCommentLists] = useState<any>([])
@@ -23,6 +25,25 @@ const VideoDetailPage = (props: any) => {
   }, [videoId]);
 
   if (Video.writer) {
+    const userId = localStorage.getItem('userId');
+
+    let listActions = [];
+
+    if(user.userData && user.userData?.isAuth) {
+      listActions.push(<LikeDislikes
+        video
+        videoId={videoId}
+        userId={localStorage.getItem('userId')}
+      />);
+
+      if (Video.writer._id !== userId ) {
+       listActions.push(<Subscriber
+         userTo={Video.writer._id}
+         userFrom={localStorage.getItem('userId')}
+       />)
+      }
+    }
+
     return (
       <Row gutter={[16, 16]}>
         <Col lg={18} xs={24}>
@@ -33,17 +54,7 @@ const VideoDetailPage = (props: any) => {
               controls
             />
             <List.Item
-              actions={[
-                <LikeDislikes
-                  video
-                  videoId={videoId}
-                  userId={localStorage.getItem('userId')}
-                />,
-                <Subscriber
-                  userTo={Video.writer._id}
-                  userFrom={localStorage.getItem('userId')}
-                />
-              ]}
+              actions={listActions}
             >
               <List.Item.Meta
                 avatar={<Avatar src={Video.writer && Video.writer.image}/>}
